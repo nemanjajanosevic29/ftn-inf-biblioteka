@@ -1,4 +1,4 @@
-class book{
+class Book{
     constructor(id, title, date, url, description, popularity) {
         this.id = id;
         this.title = title;

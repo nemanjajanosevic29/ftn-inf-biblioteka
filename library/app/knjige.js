@@ -1,14 +1,9 @@
-//B2
-
-const sveKnjige = JSON.parse(localStorage.getItem("moje-knjige")) || [];
-var iznajmljene = JSON.parse(localStorage.getItem("iznajmljene-knjige")) || [];
-
-// funkcija za prikaz dostupnih knjiga u tabeli
 function renderAvailable() {
-    var tbody = document.querySelector("#available-table tbody");
+    const sveKnjige = JSON.parse(localStorage.getItem("moje-knjige")) || [];
+    const iznajmljene = JSON.parse(localStorage.getItem("iznajmljene-knjige")) || [];
+    const tbody = document.querySelector("#available-table tbody");
     tbody.innerHTML = "";
 
-    // filtriraj samo dostupne knjige (koje nisu iznajmljene)
     const dostupne = sveKnjige.filter(k => !iznajmljene.some(i => i.id === k.id));
 
     if (dostupne.length === 0) {
@@ -16,19 +11,17 @@ function renderAvailable() {
         return;
     }
 
-    for (var i = 0; i < dostupne.length; i++) {
-        var knjiga = dostupne[i];
+    dostupne.forEach((knjiga, i) => {
+        let red = document.createElement("tr");
 
-        var red = document.createElement("tr");
-
-        var tdBr = document.createElement("td");
+        let tdBr = document.createElement("td");
         tdBr.textContent = i + 1;
 
-        var tdNaziv = document.createElement("td");
+        let tdNaziv = document.createElement("td");
         tdNaziv.textContent = knjiga.title;
 
-        var tdDugme = document.createElement("td");
-        var dugme = document.createElement("button");
+        let tdDugme = document.createElement("td");
+        let dugme = document.createElement("button");
         dugme.textContent = "Iznajmi";
         dugme.style.backgroundColor = "#28a745";
         dugme.style.color = "white";
@@ -36,36 +29,33 @@ function renderAvailable() {
         dugme.style.padding = "6px 12px";
         dugme.style.cursor = "pointer";
 
-        dugme.addEventListener("click", function(id) {
-            return function() {
-                iznajmiKnjigu(id);
-            };
-        }(knjiga.id));
+        dugme.onclick = () => {
+            iznajmiKnjigu(knjiga.id);
+        };
 
         tdDugme.appendChild(dugme);
-
         red.appendChild(tdBr);
         red.appendChild(tdNaziv);
         red.appendChild(tdDugme);
 
         tbody.appendChild(red);
-    }
+    });
 }
 
 function iznajmiKnjigu(id) {
+    const sveKnjige = JSON.parse(localStorage.getItem("moje-knjige")) || [];
+    let iznajmljene = JSON.parse(localStorage.getItem("iznajmljene-knjige")) || [];
+
     const knjiga = sveKnjige.find(k => k.id === id);
     if (!knjiga) return;
 
     iznajmljene.push(knjiga);
     localStorage.setItem("iznajmljene-knjige", JSON.stringify(iznajmljene));
 
-    renderAvailable(); // osvezi dostupne knjige
+    renderAvailable();
     if (typeof popuniTabelu === "function") {
         popuniTabelu();
     }
 }
 
-// inicijalno renderovanje dostupnih knjiga
-document.addEventListener("DOMContentLoaded", function() {
-    renderAvailable();
-});
+document.addEventListener("DOMContentLoaded", renderAvailable);
