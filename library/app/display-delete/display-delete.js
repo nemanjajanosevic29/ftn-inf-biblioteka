@@ -68,3 +68,40 @@ function obrisiKnjigu(id) {
 document.addEventListener("DOMContentLoaded", () => {
     popuniTabelu();
 });
+
+
+// A2
+
+const forma = document.getElementById("add-book-form");
+
+if (forma) {
+    forma.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const novaKnjiga = {
+            id: document.getElementById("id").value,
+            title: document.getElementById("title").value,
+            date: document.getElementById("date").value,
+            url: document.getElementById("url").value,
+            description: document.getElementById("description").value,
+            popularity: 3
+        };
+
+        let postoji = false;
+        for (let i = 0; i < knjige.length; i++) {
+            if (knjige[i].id === novaKnjiga.id) {
+                postoji = true;
+                break; 
+            }
+        }
+        if (postoji) {
+            alert("Knjiga sa tim ID-jem već postoji!");
+            return;
+        }
+
+        knjige.push(novaKnjiga);
+        sacuvajKnjige();
+        popuniTabelu();
+        forma.reset();
+    });
+}
