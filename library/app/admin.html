@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlineLib – Admin</title>
+    <link rel="stylesheet" href="dist/index.css">
+    <style>
+        .container { display: flex; gap: 2rem; margin: 2rem; }
+        .left { flex: 1; }
+        .right { flex: 1; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        button { background: #dc3545; color: white; border: none; padding: 6px 12px; cursor: pointer; }
+        button:hover { background: #c82333; }
+        form label { display: block; margin: 10px 0 5px; }
+        input, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+    <header style="background:#007bff; color:white; padding:1rem; display:flex; justify-content:space-between;">
+        <h1>OnlineLib</h1>
+        <div>
+            <button>Info</button>
+            <button>Moje Knjige</button>
+            <button>Pregled knjiga</button>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="left">
+            <h2>Pregled knjiga</h2>
+            <table id="books-table">
+                <thead>
+                    <tr>
+                        <th>Br</th>
+                        <th>Naziv</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        
+        <div class="right">
+            <h2>Dodaj novu knjigu</h2>
+            <form id="add-book-form">
+                <label>Naziv:</label>
+                <input type="text" id="title" required>
+
+                <label>ID:</label>
+                <input type="text" id="id" required>
+
+                <label>Tip / Datum štampanja:</label>
+                <input type="text" id="date" required>
+
+                <label>Slika (URL):</label>
+                <input type="text" id="url" required>
+
+                
+                <label>Opis:</label>
+                <textarea id="description" rows="4"></textarea>
+
+                <button type="submit" style="margin-top:1rem; background:#28a745; color:white; padding:10px 20px;">Dodaj</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app/shared.js"></script>
+    
+
+</body>
+</html>
